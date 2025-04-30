@@ -28,6 +28,10 @@ impl Todo {
             completed: false,
         }
     }
+
+    pub fn complete(&mut self) {
+        self.completed = true;
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Default)]
@@ -67,7 +71,7 @@ impl TodoList {
 
     pub fn complete(&mut self, id: String) -> io::Result<bool> {
         if let Some(todo) = self.todos.iter_mut().find(|t| t.id == id) {
-            todo.completed = true;
+            todo.complete();
             self.flush()?;
             Ok(true)
         } else {
